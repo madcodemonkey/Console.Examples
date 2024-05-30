@@ -1,4 +1,4 @@
-﻿namespace ConsoleDependencyInjectionExp1.Services;
+﻿namespace ConsoleDependencyInjectionUsingHostBuilderExp1.Services;
 
 public interface IMathService
 {

@@ -1,7 +1,7 @@
-﻿using ConsoleDependencyInjectionExp1.Services.Options;
+﻿using ConsoleDependencyInjectionUsingHostBuilderExp1.Services.Options;
 using Microsoft.Extensions.Options;
 
-namespace ConsoleDependencyInjectionExp1.Services;
+namespace ConsoleDependencyInjectionUsingHostBuilderExp1.Services;
 
 public class MathService : IMathService
 {
