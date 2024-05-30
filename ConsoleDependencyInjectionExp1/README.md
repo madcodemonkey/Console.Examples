@@ -1,10 +1,9 @@
-Console Dependency Injection Example 1
+# Console Dependency Injection Example 1
 
-# Summary
----
+## Summary
 This is a simple example of how to use the dependency injection in the console application.
 
-# NuGet Packages needed
+## NuGet Packages needed
 - Microsoft.Extensions.DependencyInjection
     - Needed if you plan to do dependency injection
 - Microsoft.Extensions.Configuration
