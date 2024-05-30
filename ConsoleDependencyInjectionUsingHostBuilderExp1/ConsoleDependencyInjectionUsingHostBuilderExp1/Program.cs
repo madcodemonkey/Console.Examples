@@ -12,9 +12,12 @@ AddMyDependencies(builder.Services, builder.Configuration);
 
 using IHost host = builder.Build();
 
-await TestTheMathServiceAsync(host.Services);
+await TestTheMathServiceAsync(host.Services, args);
 
-// Note:  we never call host.StartAsync() because we don't want to stop it using CTRL-C.  We just want it to run our service once and then stop.
+// Note 1: We never call host.RunAsync() because we don't want to stop it using CTRL-C.  We just want it to run our service once and then stop.
+// Note 2: Not call host.Run or host.RunAsync is a legitimate way of shutting down.  It is listed here as one of three ways to stop the host:
+//         https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host?tabs=appbuilder#host-shutdown
+// Note 3: Very similar to this example: https://stackoverflow.com/a/58277690/97803
 await host.StopAsync();
 
 
@@ -25,13 +28,23 @@ static void AddMyDependencies(IServiceCollection serviceCollection, IConfigurati
 }
 
 // Test the MathService
-static async Task TestTheMathServiceAsync(IServiceProvider hostProvider)
+static async Task TestTheMathServiceAsync(IServiceProvider serviceProvider, string[] args)
 {
-    using IServiceScope serviceScope = hostProvider.CreateScope();
-    IServiceProvider provider = serviceScope.ServiceProvider;
-    
-    var mathService = provider.GetRequiredService<IMathService>();
-    var result = await mathService.AddAsync(1, 2);
+    if (args.Length < 1 || !int.TryParse(args[0], out var firstNumber))
+    {
+        firstNumber = 1;
+    }
 
-    Console.WriteLine($"1 + 2 = {result}");
+    if (args.Length < 2 || !int.TryParse(args[1], out var secondNumber))
+    {
+        secondNumber = 2;
+    }
+
+    using IServiceScope serviceScope = serviceProvider.CreateScope();
+    IServiceProvider provider = serviceScope.ServiceProvider;
+
+    var mathService = provider.GetRequiredService<IMathService>();
+    var result = await mathService.AddAsync(firstNumber, secondNumber);
+
+    Console.WriteLine($"{firstNumber} + {secondNumber} = {result}");
 }

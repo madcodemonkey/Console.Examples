@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleDependencyInjectionExp1": {
+      "commandName": "Project",
+      "commandLineArgs": "2 4"
+    }
+  }
+}

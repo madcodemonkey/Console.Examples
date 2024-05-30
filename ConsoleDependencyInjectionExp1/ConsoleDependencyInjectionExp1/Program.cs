@@ -10,7 +10,7 @@ AddMyDependencies(collection, GetConfiguration());
 
 var serviceProvider = collection.BuildServiceProvider();
 
-await TestTheMathServiceAsync(serviceProvider);
+await TestTheMathServiceAsync(serviceProvider, args);
 
 
 
@@ -39,13 +39,23 @@ static void AddMyDependencies(IServiceCollection serviceCollection, IConfigurati
 }
 
 // Test the MathService
-static async Task TestTheMathServiceAsync(IServiceProvider hostProvider)
+static async Task TestTheMathServiceAsync(IServiceProvider serviceProvider, string[] args)
 {
-    using IServiceScope serviceScope = hostProvider.CreateScope();
+    if (args.Length < 1 || !int.TryParse(args[0], out var firstNumber))
+    {
+        firstNumber = 1;
+    }
+    
+    if (args.Length < 2 || !int.TryParse(args[1], out var secondNumber))
+    {
+        secondNumber = 2;
+    }
+
+    using IServiceScope serviceScope = serviceProvider.CreateScope();
     IServiceProvider provider = serviceScope.ServiceProvider;
 
     var mathService = provider.GetRequiredService<IMathService>();
-    var result = await mathService.AddAsync(1, 2);
+    var result = await mathService.AddAsync(firstNumber, secondNumber);
 
-    Console.WriteLine($"1 + 2 = {result}");
+    Console.WriteLine($"{firstNumber} + {secondNumber} = {result}");
 }
