@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleAsyncLocal": {
+      "commandName": "Project",
+      "commandLineArgs": "1 3"
+    }
+  }
+}
