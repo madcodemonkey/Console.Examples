@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleScopes": {
+      "commandName": "Project",
+      "commandLineArgs": "1 3"
+    }
+  }
+}
