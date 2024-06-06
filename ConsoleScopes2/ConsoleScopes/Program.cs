@@ -2,9 +2,6 @@
 using ConsoleScopes.Services.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 
 class Program
 {
@@ -36,6 +33,7 @@ class Program
             //var work3 = WorkUsesTheScopeItCreateAsync(host, "Zack", 87);
 
             await WorkUsesRootScopeAsync(host, "John");
+
             // Mixture
             //var work1 = WorkUsesRootScopeAsync(host, "John");
             //var work2 = WorkUsesRootScopeAsync(host, "Lynn");
@@ -85,9 +83,6 @@ class Program
     /// <summary>
     /// Because the scope that was created was not used, you are really interacting with the root scope!!
     /// </summary>
-    /// <param name="host"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
     private static async Task WorkUsesRootScopeAsync(IHost host, string name)
     {
         // Assign values
@@ -109,27 +104,22 @@ class Program
 public static class ServiceProviderServiceExtensions 
 {
     public static async Task<IDataContextService> ImpersonateAsync(this IServiceProvider provider, string name)
-    {  
-
+    {
         // Mock external call to get user info
         var workerService = provider.GetRequiredService<IWorkerService>();
         await workerService.DoWorkAsync();
-
-      
+        
         var context = provider.GetRequiredService<IDataContextService>();
         context.UserName = name;
 
         Console.WriteLine($"Root Scope EXT async call - Name: {context.UserName} (expecting {name})");
 
         return context;
+
         //var dataContextWrapper = new DataContextWrapper(context, name);
-
         //Console.WriteLine($"Root Scope EXT async call - Name: {dataContextWrapper.Context.UserName} (expecting {name})");
-
-
         //return dataContextWrapper;
     }
-
 }
  
   
