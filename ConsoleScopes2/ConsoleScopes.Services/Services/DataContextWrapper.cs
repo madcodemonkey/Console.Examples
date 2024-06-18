@@ -1,6 +1,6 @@
 ﻿namespace ConsoleScopes.Services;
 
-public class DataContextWrapper : IDisposable
+public class DataContextWrapper  
 {
 
     public DataContextWrapper(IDataContextService dataContextService, string name)
@@ -11,8 +11,5 @@ public class DataContextWrapper : IDisposable
 
     public IDataContextService Context { get; private set; }
 
-    public void Dispose()
-    {
-        Context.Revert();
-    }
+  
 }

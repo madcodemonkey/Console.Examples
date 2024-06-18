@@ -2,20 +2,12 @@
 
 public class DataContextService : IDataContextService
 {
-    private readonly AsyncLocal<string> _priorUserNameAsyncLocal;
-    private readonly AsyncLocal<string> _userNameAsyncLocal;
+    private static readonly AsyncLocal<string> _userNameAsyncLocal = new();
     private string _userName = "Nobody";
 
     public DataContextService()
     {
-        _priorUserNameAsyncLocal= new AsyncLocal<string>
-        {
-            Value = "None"
-        };
-        _userNameAsyncLocal = new AsyncLocal<string>
-        {
-            Value = "None"
-        };
+        _userNameAsyncLocal.Value = "None";
     }
 
     public string UserName
@@ -26,21 +18,7 @@ public class DataContextService : IDataContextService
         }
         set
         {
-            //_priorUserNameAsyncLocal.Value = _userNameAsyncLocal.Value;
             _userNameAsyncLocal.Value = value;
         }
     }
-
-    public void Revert()
-    {
-        //_priorUserNameAsyncLocal.Value = "Nothing";
-        //_userNameAsyncLocal.Value = _priorUserNameAsyncLocal.Value;
-
-    }
-
-    //public string UserName
-    //{
-    //    get => _userName;
-    //    set => _userName = value;
-    //}
 }
